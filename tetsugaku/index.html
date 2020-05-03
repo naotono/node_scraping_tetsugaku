@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        axios.get("http://localhost:8000")
+            .then(res => {
+                res.data.forEach(item => {
+                    const h1 = document.createElement("h1");
+                    const a = document.createElement("a");
+                    a.textContent = item.title;
+                    a.href = item.link;
+                    h1.appendChild(a);
+                    document.body.appendChild(h1);
+                })
+            });
+    </script>
+</body>
+
+</html>

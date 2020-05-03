@@ -18,7 +18,7 @@ client.connect((err) => {
 })
 
 app.get("/", async (req, res) => {
-    collection.find({}).toArray((err, docs) => {
+    collection.find({}).sort({ date: 1 }).toArray((err, docs) => {
         if (err) console.log(err);
         res.json(docs);
         console.log(docs);
@@ -33,12 +33,13 @@ function getTetsugakuNews() {
             $(".article-title").each((i, el) => {
                 const title = $(el).text();
                 const link = $(el).find("a").attr("href");
+                const date = new Date().getTime();
 
                 collection.findOne({ "link": link }, (err, doc) => {
                     if (err) throw err;
                     if (!doc) {
                         collection.insert([
-                            { "title": title, "link": link }
+                            { "title": title, "link": link, "date": date }
                         ])
                     }
                 })
