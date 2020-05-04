@@ -48,6 +48,7 @@ function getTetsugakuNews() {
         });
 }
 
+
 function getQiita() {
     axios.get("https://qiita.com/tags/javascript?page=1")
         .then(res => {
