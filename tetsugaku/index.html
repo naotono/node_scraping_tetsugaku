@@ -10,7 +10,8 @@
 
 <body>
     <script>
-        axios.get("http://localhost:8000")
+        // axios.get("http://localhost:8000")
+        axios.get("https://image-123.com/scraping/")
             .then(res => {
                 res.data.forEach(item => {
                     const h1 = document.createElement("h1");

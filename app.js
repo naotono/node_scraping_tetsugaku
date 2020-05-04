@@ -38,13 +38,37 @@ function getTetsugakuNews() {
                 collection.findOne({ "link": link }, (err, doc) => {
                     if (err) throw err;
                     if (!doc) {
-                        collection.insert([
+                        collection.insertOne(
                             { "title": title, "link": link, "date": date }
-                        ])
+                        )
                     }
                 })
             })
             console.log("Scraping done...")
         });
 }
-setInterval(getTetsugakuNews, 1000 * 60 * 60);
+
+function getQiita() {
+    axios.get("https://qiita.com/tags/javascript?page=1")
+        .then(res => {
+            const $ = cheerio.load(res.data);
+            $(".tst-ArticleBody_title").each((i, el) => {
+                const title = $(el).text();
+                const link = $(el).attr("href");
+                const date = new Date().getTime();
+
+                collection.findOne({ "link": link }, (err, doc) => {
+                    if (err) throw err;
+                    if (!doc) {
+                        collection.insertOne(
+                            { "title": title, "link": "https://qiita.com/" + link, "date": date }
+                        )
+                    }
+                })
+            })
+            console.log("Scraping done...")
+        });
+}
+
+setInterval(getTetsugakuNews, 1000 * 60 * 30);
+setInterval(getQiita, 1000 * 60 * 30);
